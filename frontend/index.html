@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loja API — Gerenciador de produtos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark">L</div>
+    <div>
+      <p class="eyebrow">PAINEL DE DESENVOLVIMENTO</p>
+      <h1>Loja API</h1>
+    </div>
+    <span id="apiStatus" class="status status-unknown"><span class="status-dot"></span> API não verificada</span>
+  </header>
+
+  <main class="container">
+    <section class="intro">
+      <div>
+        <p class="eyebrow">FASTAPI + SQLITE</p>
+        <h2>Gerencie seus produtos</h2>
+        <p>Use esta interface para testar as requisições da sua API sem abrir o Swagger.</p>
+      </div>
+      <button id="refreshBtn" class="button button-secondary" type="button">↻ Atualizar lista</button>
+    </section>
+
+    <section class="config panel">
+      <div class="section-heading">
+        <div><p class="eyebrow">CONEXÃO</p><h3>Endereço da API</h3></div>
+        <span class="helper">Normalmente, durante o desenvolvimento</span>
+      </div>
+      <div class="config-row">
+        <label for="apiUrl">URL base</label>
+        <input id="apiUrl" type="url" value="http://127.0.0.1:8000" placeholder="http://127.0.0.1:8000">
+        <button id="saveUrlBtn" class="button button-secondary" type="button">Usar endereço</button>
+        <button id="testBtn" class="button button-primary" type="button">Testar conexão</button>
+      </div>
+      <p class="hint">A URL base é combinada com as rotas configuradas no JavaScript. Se sua API estiver em outra porta, altere aqui.</p>
+    </section>
+
+    <section class="content-grid">
+      <section class="panel form-panel">
+        <div class="section-heading">
+          <div><p class="eyebrow">REQUISIÇÃO POST / PUT</p><h3 id="formTitle">Cadastrar produto</h3></div>
+          <span id="formMode" class="pill">POST</span>
+        </div>
+        <form id="productForm">
+          <input id="productId" type="hidden">
+          <label for="nome">Nome do produto</label>
+          <input id="nome" name="nome" required maxlength="100" placeholder="Ex.: Teclado mecânico">
+          <label for="preco">Preço (R$)</label>
+          <input id="preco" name="preco" type="number" required min="0.01" step="0.01" placeholder="Ex.: 149.90">
+          <p class="hint">Os campos enviados precisam corresponder ao modelo esperado pela sua API.</p>
+          <div class="form-actions">
+            <button id="submitBtn" class="button button-primary" type="submit">Cadastrar produto</button>
+            <button id="cancelEditBtn" class="button button-ghost hidden" type="button">Cancelar edição</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel products-panel">
+        <div class="section-heading">
+          <div><p class="eyebrow">REQUISIÇÃO GET</p><h3>Produtos cadastrados</h3></div>
+          <span id="productCount" class="pill">0 produtos</span>
+        </div>
+        <div id="message" class="message hidden" role="status"></div>
+        <div id="loading" class="loading hidden">Carregando produtos…</div>
+        <div id="emptyState" class="empty-state">
+          <div class="empty-icon">□</div>
+          <strong>Nenhum produto exibido ainda</strong>
+          <p>Clique em “Atualizar lista” para buscar os produtos na API.</p>
+        </div>
+        <div id="productList" class="product-list"></div>
+      </section>
+    </section>
+
+    <section class="panel log-panel">
+      <div class="section-heading">
+        <div><p class="eyebrow">DEBUG</p><h3>Última resposta da API</h3></div>
+        <button id="clearLogBtn" class="button button-ghost button-small" type="button">Limpar</button>
+      </div>
+      <p class="hint">Aqui você pode ver o método, a URL, o status HTTP e a resposta recebida.</p>
+      <pre id="responseLog">Nenhuma requisição feita ainda.</pre>
+    </section>
+    <footer>Projeto de estudo · Frontend HTML, CSS e JavaScript · Backend FastAPI</footer>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
